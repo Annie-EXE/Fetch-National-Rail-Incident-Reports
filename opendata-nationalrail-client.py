@@ -22,6 +22,12 @@ import io
 import time
 import socket
 import logging
+import xml.etree.ElementTree as ET
+from datetime import datetime
+from extract_incident_data import (
+    extract_xml_incident_data,
+    convert_timestamp
+)
 
 logging.basicConfig(
     format='%(asctime)s %(levelname)s\t%(message)s', level=logging.INFO)
@@ -89,8 +95,9 @@ class StompClient(stomp.ConnectionListener):
 
     def on_message(self, frame):
         try:
-
-            print(frame.body.decode())
+            message_data = extract_xml_incident_data(frame.body.decode())
+            print(message_data)
+            # print(frame.body.decode())
             input()
         except Exception as e:
             logging.error(str(e))
