@@ -95,6 +95,7 @@ class StompClient(stomp.ConnectionListener):
 
     def on_message(self, frame):
         try:
+            print(frame.body.decode())
             message_data = extract_xml_incident_data(frame.body.decode())
             print(message_data)
             # print(frame.body.decode())
